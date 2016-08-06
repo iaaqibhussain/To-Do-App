@@ -10,8 +10,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var ionic_angular_1 = require('ionic-angular');
 var add_1 = require("../add/add");
+var angularfire2_1 = require('angularfire2');
 var HomePage = (function () {
-    function HomePage(nav) {
+    function HomePage(firedb, nav) {
+        this.firedb = firedb;
         this.nav = nav;
     }
     HomePage.prototype.onPageDidEnter = function () {
@@ -31,7 +33,7 @@ var HomePage = (function () {
         ionic_angular_1.Page({
             templateUrl: 'build/pages/home/home.html'
         }), 
-        __metadata('design:paramtypes', [ionic_angular_1.NavController])
+        __metadata('design:paramtypes', [angularfire2_1.AngularFire, ionic_angular_1.NavController])
     ], HomePage);
     return HomePage;
 }());

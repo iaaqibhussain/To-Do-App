@@ -9,8 +9,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var ionic_angular_1 = require('ionic-angular');
+var angularfire2_1 = require('angularfire2');
 var AddPage = (function () {
-    function AddPage(nav) {
+    function AddPage(af, nav) {
+        this.af = af;
         this.nav = nav;
         this.todoList = JSON.parse(localStorage.getItem("todos"));
         if (!this.todoList) {
@@ -21,15 +23,29 @@ var AddPage = (function () {
     AddPage.prototype.save = function () {
         if (this.todoItem != "") {
             this.todoList.push(this.todoItem);
-            localStorage.setItem("todos", JSON.stringify(this.todoList));
-            this.nav.pop();
+            var textItems = this.af.database.list('/textItems');
+            textItems.push({
+                "title": "Ionic 2 with Firebase and Typescript",
+                "description": "Test Message from ionic app",
+                // auth data from the navParam object...
+                "user": "Aaqib Hussain",
+                "timestamp": (new Date()).getTime()
+            }).then(function (_data) {
+                console.log(_data);
+                alert("Item Successfully Added");
+            }).catch(function (_error) {
+                console.log(_error);
+                alert("Error Adding Item");
+            });
         }
+        localStorage.setItem("todos", JSON.stringify(this.todoList));
+        this.nav.pop();
     };
     AddPage = __decorate([
         ionic_angular_1.Page({
             templateUrl: 'build/pages/add/add.html'
         }), 
-        __metadata('design:paramtypes', [ionic_angular_1.NavController])
+        __metadata('design:paramtypes', [angularfire2_1.AngularFire, ionic_angular_1.NavController])
     ], AddPage);
     return AddPage;
 }());

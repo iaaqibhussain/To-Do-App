@@ -1,14 +1,22 @@
 import {Page, NavController} from 'ionic-angular';
 import {AddPage} from "../add/add";
- 
+import {AngularFire} from 'angularfire2';
+
+
 @Page({
     templateUrl: 'build/pages/home/home.html'
 })
 export class HomePage {
- 
+    
     public todoList: Array<string>;
  
-    constructor(private nav: NavController) { }
+    constructor(public firedb : AngularFire, private nav: NavController) { 
+    
+    
+    
+        
+        
+    }
  
     onPageDidEnter() {
         this.todoList = JSON.parse(localStorage.getItem("todos"));
@@ -16,7 +24,7 @@ export class HomePage {
             this.todoList = [];
         }
     }
- 
+
     delete(index: number) {
         this.todoList.splice(index, 1);
         localStorage.setItem("todos", JSON.stringify(this.todoList));
